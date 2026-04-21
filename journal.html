@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal — Creative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0d0d0b;
+      --ink-mid: #6a6a65;
+      --ink-faint: rgba(13,13,11,0.08);
+      --paper: #f4f1e8;
+      --paper-warm: #e8e4d6;
+      --accent: #d35400;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Syne', system-ui, sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 2px solid var(--ink);
+      background: var(--paper-warm);
+    }
+    .logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 28px;
+      font-weight: 600;
+      font-style: italic;
+    }
+    .logo a { color: var(--ink); text-decoration: none; }
+    .logo a::after { content: '✦'; font-size: 10px; margin-left: 4px; vertical-align: super; }
+
+    .nav { display: flex; flex-direction: column; gap: 8px; margin-top: 56px; }
+    .nav-link {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      padding: 8px 0;
+      transition: color 0.2s;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--ink); }
+    .nav-link.active { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+
+    .sidebar-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-mid);
+      line-height: 2;
+    }
+    .sidebar-meta a { color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+    .sidebar-meta a:hover { color: var(--accent); }
+
+    .main { padding: 48px 56px 80px; }
+
+    header {
+      margin-bottom: 60px;
+      padding-bottom: 40px;
+      border-bottom: 2px solid var(--ink);
+    }
+    .label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(40px, 8vw, 72px);
+      font-weight: 400;
+      line-height: 1.05;
+    }
+    h1 em { font-style: italic; }
+
+    /* Thought Block */
+    .thought-block {
+      padding: 28px;
+      background: var(--paper-warm);
+      border-left: 4px solid var(--accent);
+      margin-bottom: 44px;
+    }
+    .thought-block p {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 18px;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    /* Toggle */
+    .toggle { margin-bottom: 20px; }
+    .toggle-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      padding: 14px 18px;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: 'Syne', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .toggle-header:hover { background: var(--accent); }
+    .toggle-icon { transition: transform 0.3s; font-size: 10px; }
+    .toggle.open .toggle-icon { transform: rotate(90deg); }
+    .toggle-content {
+      display: none;
+      padding: 20px;
+      background: var(--paper-warm);
+      border: 1px solid var(--ink-faint);
+      border-top: none;
+    }
+    .toggle.open .toggle-content { display: block; }
+
+    .divider {
+      margin: 40px 0;
+      border: none;
+      border-top: 1px dashed var(--ink-faint);
+    }
+
+    .entries-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      margin-bottom: 32px;
+    }
+
+    .entry {
+      padding: 32px 0;
+      border-bottom: 1px solid var(--ink-faint);
+      transition: padding-left 0.3s, background 0.3s;
+    }
+    .entry:hover {
+      padding-left: 12px;
+      background: var(--paper-warm);
+    }
+    .entry-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .entry h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 26px;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+    .entry h2 a { color: var(--ink); text-decoration: none; }
+    .entry h2 a:hover { text-decoration: underline; }
+    .entry p {
+      color: var(--ink-mid);
+      line-height: 1.8;
+    }
+    .tags {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--ink-mid);
+      background: var(--paper-warm);
+      padding: 4px 10px;
+    }
+
+    footer {
+      margin-top: 60px;
+      padding-top: 28px;
+      border-top: 2px solid var(--ink);
+      display: flex;
+      justify-content: space-between;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--ink-mid);
+    }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar {
+        position: relative;
+        height: auto;
+        padding: 24px;
+        border-right: none;
+        border-bottom: 2px solid var(--ink);
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .nav { margin-top: 16px; flex-direction: row; gap: 16px; }
+      .sidebar-meta { display: none; }
+      .main { padding: 32px 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div>
+      <p class="logo"><a href="index.html">Riche</a></p>
+      <nav class="nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="journal.html" class="nav-link active">Journal</a>
+        <a href="work.html" class="nav-link">Work</a>
+        <a href="about.html" class="nav-link">About</a>
+      </nav>
+    </div>
+    <div class="sidebar-meta">
+      <p>✦ Designer &amp; Maker</p>
+      <p><a href="mailto:hello@yourname.com">hello@yourname.com</a></p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header>
+      <p class="label">Journal</p>
+      <h1>Notes, essays<br><em>& thoughts</em></h1>
+    </header>
+
+    <div class="thought-block">
+      <p>Currently thinking about: how to make work feel more human. Less polished, more personal. The grain, the hand, the imperfection.</p>
+    </div>
+
+    <div class="toggle">
+      <div class="toggle-header">
+        <span class="toggle-icon">▶</span>
+        <span>Design principles</span>
+      </div>
+      <div class="toggle-content">
+        <p>01. Process over polish</p>
+        <p>02. Show the rough drafts</p>
+        <p>03. Speak in your voice</p>
+        <p>04. Embrace the mess</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <p class="entries-title">All entries</p>
+
+    <article class="entry">
+      <p class="entry-meta">January 15, 2026 — Essay</p>
+      <h2><a href="article-finding-voice.html">On finding your voice</a></h2>
+      <p>For years I tried to design like everyone else. Clean, minimal, professional. Then I realized the only work that mattered was the work that felt like me.</p>
+      <div class="tags">
+        <span class="tag">voice</span>
+        <span class="tag">process</span>
+      </div>
+    </article>
+
+    <article class="entry">
+      <p class="entry-meta">December 03, 2025 — Notes</p>
+      <h2><a href="article-messy-drafts.html">Messy first drafts</a></h2>
+      <p>What if we showed more process and less polish? What if the messy bits were the feature, not the bug?</p>
+      <div class="tags">
+        <span class="tag">process</span>
+        <span class="tag">raw</span>
+      </div>
+    </article>
+
+    <article class="entry">
+      <p class="entry-meta">November 18, 2025 — Essay</p>
+      <h2><a href="article-editorial-matters.html">Why editorial matters</a></h2>
+      <p>Magazine layouts taught me more about web design than any UX course. The rhythm. The white space.</p>
+      <div class="tags">
+        <span class="tag">editorial</span>
+        <span class="tag">layout</span>
+      </div>
+    </article>
+
+    <article class="entry">
+      <p class="entry-meta">October 22, 2025 — Notes</p>
+      <h2><a href="article-grain.html">Quick thought on grain</a></h2>
+      <p>A little texture goes a long way. It's the difference between "designed" and "made by a person."</p>
+      <div class="tags">
+        <span class="tag">texture</span>
+        <span class="tag">grain</span>
+      </div>
+    </article>
+
+    <footer>
+      <span>© 2026 — Riche</span>
+      <div class="footer-links">
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+        <a href="#">Read.cv</a>
+      </div>
+    </footer>
+  </main>
+</div>
+
+<script>
+  document.querySelectorAll('.toggle-header').forEach(header => {
+    header.addEventListener('click', () => {
+      header.parentElement.classList.toggle('open');
+    });
+  });
+
+  document.querySelectorAll('.entry').forEach((entry, i) => {
+    entry.style.opacity = '0';
+    setTimeout(() => {
+      entry.style.transition = 'opacity 0.5s';
+      entry.style.opacity = '1';
+    }, 80 + i * 80);
+  });
+</script>
+
+</body>
+</html>

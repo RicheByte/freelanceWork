@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick thought on grain — Riche</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0d0d0b;
+      --ink-mid: #6a6a65;
+      --ink-faint: rgba(13,13,11,0.08);
+      --paper: #f4f1e8;
+      --paper-warm: #e8e4d6;
+      --accent: #d35400;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Syne', system-ui, sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 2px solid var(--ink);
+      background: var(--paper-warm);
+    }
+    .logo { font-family: 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 600; font-style: italic; }
+    .logo a { color: var(--ink); text-decoration: none; }
+    .logo a::after { content: '✦'; font-size: 10px; margin-left: 4px; vertical-align: super; }
+    .nav { display: flex; flex-direction: column; gap: 8px; margin-top: 56px; }
+    .nav-link {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      padding: 8px 0;
+      transition: color 0.2s;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--ink); }
+    .nav-link.active { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+    .sidebar-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-mid);
+      line-height: 2;
+    }
+    .sidebar-meta a { color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+    .sidebar-meta a:hover { color: var(--accent); }
+
+    .main { padding: 48px 56px 80px; max-width: 800px; }
+
+    header {
+      margin-bottom: 60px;
+      padding-bottom: 40px;
+      border-bottom: 2px solid var(--ink);
+    }
+    .label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(40px, 8vw, 72px);
+      font-weight: 400;
+      line-height: 1.05;
+    }
+
+    .article-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .article-content {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .article-content p {
+      margin-bottom: 24px;
+      color: var(--ink);
+    }
+
+    .article-image {
+      width: 100%;
+      height: 400px;
+      background: var(--paper-warm);
+      margin: 40px 0;
+      object-fit: cover;
+      border: 1px solid var(--ink-faint);
+    }
+
+    .tags {
+      display: flex;
+      gap: 8px;
+      margin-top: 40px;
+      padding-top: 40px;
+      border-top: 1px solid var(--ink-faint);
+    }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--ink-mid);
+      background: var(--paper-warm);
+      padding: 6px 12px;
+    }
+
+    footer {
+      margin-top: 60px;
+      padding-top: 28px;
+      border-top: 2px solid var(--ink);
+      display: flex;
+      justify-content: space-between;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--ink-mid);
+    }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar {
+        position: relative;
+        height: auto;
+        padding: 24px;
+        border-right: none;
+        border-bottom: 2px solid var(--ink);
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .nav { margin-top: 16px; flex-direction: row; gap: 16px; }
+      .sidebar-meta { display: none; }
+      .main { padding: 32px 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div>
+      <p class="logo"><a href="index.html">Riche</a></p>
+      <nav class="nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="journal.html" class="nav-link active">Journal</a>
+        <a href="work.html" class="nav-link">Work</a>
+        <a href="about.html" class="nav-link">About</a>
+      </nav>
+    </div>
+    <div class="sidebar-meta">
+      <p>✦ Designer &amp; Maker</p>
+      <p><a href="mailto:hello@yourname.com">hello@yourname.com</a></p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header>
+      <p class="label">Notes</p>
+      <h1>Quick thought on grain</h1>
+      <p class="article-meta">October 22, 2025</p>
+    </header>
+
+    <img src="https://picsum.photos/seed/grain/800/400" alt="Texture" class="article-image">
+
+    <div class="article-content">
+      <p>Texture changes everything.</p>
+
+      <p>Perfectly smooth design feels like a product. Sterile. Factory-optimized. Inoffensive. Works. Nobody hates.</p>
+
+      <p>Nobody loves either.</p>
+
+      <p>Grain says human. Hands. Care. Imperfection. Pixels that don't line up perfectly. Colors slightly off.</p>
+
+      <p>Not broken. Just alive.</p>
+
+      <p>I tried grain everywhere. Backgrounds. Type. Edges. Work felt different suddenly. Not something made. Something made by someone.</p>
+
+      <p>Grain is the fingerprint.</p>
+
+      <p>Sounds small. Difference between design and craft. Brand decision vs person. Cold vs warm.</p>
+
+      <p>Proud work always has grain. Not slick. Texture. I was here. I made this. My imperfections baked in.</p>
+
+      <p>That's the difference between designed and made.</p>
+    </div>
+
+    <div class="tags">
+      <span class="tag">texture</span>
+      <span class="tag">grain</span>
+      <span class="tag">craft</span>
+    </div>
+
+    <footer>
+      <span>© 2026 — Riche</span>
+      <div class="footer-links">
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+        <a href="#">Read.cv</a>
+      </div>
+    </footer>
+  </main>
+</div>
+
+</body>
+</html>

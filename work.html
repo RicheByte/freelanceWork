@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work — Creative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0d0d0b;
+      --ink-mid: #6a6a65;
+      --ink-faint: rgba(13,13,11,0.08);
+      --paper: #f4f1e8;
+      --paper-warm: #e8e4d6;
+      --accent: #d35400;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Syne', system-ui, sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 2px solid var(--ink);
+      background: var(--paper-warm);
+    }
+    .logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 28px;
+      font-weight: 600;
+      font-style: italic;
+    }
+    .logo a { color: var(--ink); text-decoration: none; }
+    .logo a::after { content: '✦'; font-size: 10px; margin-left: 4px; vertical-align: super; }
+
+    .nav { display: flex; flex-direction: column; gap: 8px; margin-top: 56px; }
+    .nav-link {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      padding: 8px 0;
+      transition: color 0.2s;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--ink); }
+    .nav-link.active { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+
+    .sidebar-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-mid);
+      line-height: 2;
+    }
+    .sidebar-meta a { color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+    .sidebar-meta a:hover { color: var(--accent); }
+
+    .main { padding: 48px 56px 80px; }
+
+    header {
+      margin-bottom: 48px;
+      padding-bottom: 40px;
+      border-bottom: 2px solid var(--ink);
+    }
+    .label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(40px, 8vw, 72px);
+      font-weight: 400;
+      line-height: 1.05;
+    }
+    h1 em { font-style: italic; }
+    .subtitle {
+      font-size: 18px;
+      color: var(--ink-mid);
+      margin-top: 20px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      background: transparent;
+      border: 1px solid var(--ink-faint);
+      padding: 8px 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+    }
+
+    .work-list {
+      list-style: none;
+    }
+    .work-item {
+      display: grid;
+      grid-template-columns: 100px 1fr 100px;
+      gap: 24px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--ink-faint);
+      transition: padding-left 0.3s, background 0.3s;
+    }
+    .work-item:hover {
+      padding-left: 12px;
+      background: var(--paper-warm);
+    }
+    .work-year {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+    }
+    .work-content h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .work-content h3 a { color: var(--ink); text-decoration: none; }
+    .work-content h3 a:hover { text-decoration: underline; }
+    .work-desc {
+      font-size: 14px;
+      color: var(--ink-mid);
+      line-height: 1.6;
+    }
+    .work-cat {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      text-align: right;
+      color: var(--ink-mid);
+    }
+
+    .note-block {
+      margin-top: 60px;
+      padding: 28px;
+      background: var(--paper-warm);
+      border: 1px dashed var(--ink-faint);
+    }
+    .note-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .note-block p {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 16px;
+      font-style: italic;
+      line-height: 1.7;
+    }
+
+    footer {
+      margin-top: 60px;
+      padding-top: 28px;
+      border-top: 2px solid var(--ink);
+      display: flex;
+      justify-content: space-between;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--ink-mid);
+    }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar {
+        position: relative;
+        height: auto;
+        padding: 24px;
+        border-right: none;
+        border-bottom: 2px solid var(--ink);
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .nav { margin-top: 16px; flex-direction: row; gap: 16px; }
+      .sidebar-meta { display: none; }
+      .main { padding: 32px 20px 60px; }
+      .work-item { grid-template-columns: 1fr; gap: 4px; }
+      .work-cat { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div>
+      <p class="logo"><a href="index.html">Riche</a></p>
+      <nav class="nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="journal.html" class="nav-link">Journal</a>
+        <a href="work.html" class="nav-link active">Work</a>
+        <a href="about.html" class="nav-link">About</a>
+      </nav>
+    </div>
+    <div class="sidebar-meta">
+      <p>✦ Designer &amp; Maker</p>
+      <p><a href="mailto:hello@yourname.com">hello@yourname.com</a></p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header>
+      <p class="label">Work</p>
+      <h1>Selected projects<br><em>& experiments</em></h1>
+      <p class="subtitle">A mix of client work, personal projects, and things I'm still figuring out.</p>
+    </header>
+
+    <div class="filters">
+      <button class="filter-btn active">All</button>
+      <button class="filter-btn">Branding</button>
+      <button class="filter-btn">Editorial</button>
+      <button class="filter-btn">Web</button>
+      <button class="filter-btn">Experiments</button>
+    </div>
+
+    <ul class="work-list">
+      <li class="work-item">
+        <span class="work-year">2025</span>
+        <div class="work-content">
+          <h3><a href="#">Editorial Brand</a></h3>
+          <p class="work-desc">Complete brand identity for an independent publisher. Voice, typography, system.</p>
+        </div>
+        <span class="work-cat">Branding</span>
+      </li>
+      <li class="work-item">
+        <span class="work-year">2025</span>
+        <div class="work-content">
+          <h3><a href="#">Magazine Spreads</a></h3>
+          <p class="work-desc">Layout and typography for a print magazine. Rhythm, white space.</p>
+        </div>
+        <span class="work-cat">Editorial</span>
+      </li>
+      <li class="work-item">
+        <span class="work-year">2024</span>
+        <div class="work-content">
+          <h3><a href="#">Type Exploration</a></h3>
+          <p class="work-desc">Personal project. Playing with type, scale, and the space between letters.</p>
+        </div>
+        <span class="work-cat">Experiments</span>
+      </li>
+      <li class="work-item">
+        <span class="work-year">2024</span>
+        <div class="work-content">
+          <h3><a href="#">Web Experience</a></h3>
+          <p class="work-desc">Web design for a design studio. Clean, editorial, human.</p>
+        </div>
+        <span class="work-cat">Web</span>
+      </li>
+      <li class="work-item">
+        <span class="work-year">2024</span>
+        <div class="work-content">
+          <h3><a href="#">Brand Identity</a></h3>
+          <p class="work-desc">Logo, voice, and visual language for a small creative business.</p>
+        </div>
+        <span class="work-cat">Branding</span>
+      </li>
+      <li class="work-item">
+        <span class="work-year">2023</span>
+        <div class="work-content">
+          <h3><a href="#">Design Systems</a></h3>
+          <p class="work-desc">Token-based design system for a growing product team.</p>
+        </div>
+        <span class="work-cat">Systems</span>
+      </li>
+    </ul>
+
+    <div class="note-block">
+      <p class="note-label">Sketches & roughs</p>
+      <p>Rough mockups, bad first drafts, wrong directions. The messy bits are the real work.</p>
+    </div>
+
+    <footer>
+      <span>© 2026 — Riche</span>
+      <div class="footer-links">
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+        <a href="#">Read.cv</a>
+      </div>
+    </footer>
+  </main>
+</div>
+
+<script>
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  document.querySelectorAll('.work-item').forEach((item, i) => {
+    item.style.opacity = '0';
+    setTimeout(() => {
+      item.style.transition = 'opacity 0.5s';
+      item.style.opacity = '1';
+    }, 60 + i * 60);
+  });
+</script>
+
+</body>
+</html>

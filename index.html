@@ -1,477 +1,472 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio — Creative Developer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --ink: #111110;
-    --ink-mid: #6b6b67;
-    --ink-faint: rgba(17,17,16,0.12);
-    --ink-ghost: rgba(17,17,16,0.04);
-    --paper: #fafaf8;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'Geist', system-ui, sans-serif;
-    font-size: 16px;
-    line-height: 1.7;
-    font-weight: 400;
-    -webkit-font-smoothing: antialiased;
-    padding: 0 20px;
-    min-height: 100vh;
-  }
-  .page {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 96px 0 120px;
-  }
-
-  .mark {
-    font-family: 'Geist Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink-mid);
-    margin-bottom: 52px;
-  }
-  .title {
-    font-family: 'EB Garamond', Georgia, serif;
-    font-size: clamp(38px, 6vw, 54px);
-    font-weight: 400;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin-bottom: 28px;
-  }
-  .title em { font-style: italic; color: var(--ink-mid); }
-  .intro {
-    font-size: 16px;
-    color: var(--ink-mid);
-    max-width: 480px;
-    line-height: 1.75;
-    margin-bottom: 36px;
-  }
-  .status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    letter-spacing: 0.05em;
-    font-family: 'Geist Mono', monospace;
-    color: var(--ink-mid);
-    border: 1px solid var(--ink-faint);
-    border-radius: 100px;
-    padding: 5px 13px 5px 10px;
-  }
-  .dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: #3d8b4e;
-    flex-shrink: 0;
-    animation: pulse-dot 2.4s ease-in-out infinite;
-  }
-  @keyframes pulse-dot {
-    0%,100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.45; transform: scale(0.7); }
-  }
-  .status-text {
-    transition: opacity 0.3s ease;
-  }
-  .rule { border: none; border-top: 1px solid var(--ink-faint); margin: 72px 0; }
-  .section-label {
-    font-family: 'Geist Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--ink-mid);
-    margin-bottom: 20px;
-  }
-
-  /* Work list */
-  .work-list { list-style: none; }
-  .work-item {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: start;
-    gap: 16px;
-    padding: 16px 0;
-    border-top: 1px solid var(--ink-faint);
-    text-decoration: none;
-    color: inherit;
-    transition: opacity 0.18s;
-  }
-  .work-item:last-child { border-bottom: 1px solid var(--ink-faint); }
-  .work-item:hover { opacity: 0.5; }
-  .work-item:hover .work-arrow { transform: translate(3px,-3px); }
-  .work-name { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
-  .work-detail { font-size: 13px; color: var(--ink-mid); line-height: 1.5; }
-  .work-right { text-align: right; flex-shrink: 0; }
-  .work-year { font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--ink-mid); display: block; margin-bottom: 3px; }
-  .work-arrow { font-size: 13px; color: var(--ink-mid); display: block; transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1); }
-
-  /* Pullquote */
-  .pullquote {
-    font-family: 'EB Garamond', Georgia, serif;
-    font-size: clamp(19px, 3vw, 24px);
-    font-style: italic;
-    line-height: 1.5;
-    color: var(--ink);
-    padding: 0 0 0 20px;
-    border-left: 2px solid var(--ink-faint);
-    margin: 52px 0;
-  }
-
-  /* About */
-  .about-text { font-size: 16px; line-height: 1.8; color: var(--ink-mid); max-width: 540px; }
-  .about-text strong { color: var(--ink); font-weight: 500; }
-
-  /* Skills */
-  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; }
-  .skill-group { padding: 18px 0; border-top: 1px solid var(--ink-faint); }
-  .skill-group:nth-child(odd) { padding-right: 32px; border-right: 1px solid var(--ink-faint); }
-  .skill-group:nth-child(even) { padding-left: 32px; }
-  .skill-group:nth-last-child(-n+2) { border-bottom: 1px solid var(--ink-faint); }
-  .skill-category {
-    font-family: 'Geist Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink-mid);
-    margin-bottom: 10px;
-  }
-  .skill-items { font-size: 14px; color: var(--ink); line-height: 1.9; }
-
-  /* Contact */
-  .contact-block {
-    margin-top: 52px;
-    padding: 28px 32px;
-    border: 1px solid var(--ink-faint);
-    border-radius: 3px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 24px;
-    transition: background 0.2s, border-color 0.2s;
-  }
-  .contact-block:hover { background: var(--ink-ghost); border-color: rgba(17,17,16,0.22); }
-  .contact-cta { font-family: 'EB Garamond', Georgia, serif; font-size: 21px; font-style: italic; color: var(--ink); margin-bottom: 5px; }
-  .contact-sub { font-size: 13px; color: var(--ink-mid); font-family: 'Geist Mono', monospace; }
-  .contact-link {
-    font-family: 'Geist Mono', monospace;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--ink);
-    text-decoration: none;
-    letter-spacing: 0.04em;
-    border-bottom: 1px solid var(--ink);
-    padding-bottom: 1px;
-    white-space: nowrap;
-    transition: opacity 0.18s;
-  }
-  .contact-link:hover { opacity: 0.45; }
-
-  /* Footer */
-  .footer {
-    margin-top: 56px;
-  }
-  .footer-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: 'Geist Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    color: var(--ink-mid);
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--ink-faint);
-  }
-  .footer-status {
-    font-size: 13px;
-    color: var(--ink-mid);
-    font-family: 'Geist', system-ui, sans-serif;
-    font-weight: 400;
-    line-height: 1.6;
-  }
-  .footer-links { display: flex; gap: 20px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.06em; }
-  .footer-links a { color: var(--ink-mid); text-decoration: none; transition: color 0.18s; }
-  .footer-links a:hover { color: var(--ink); }
-
-  /* Cursor */
-  @media (pointer: fine) {
-    body { cursor: none; }
-    #cursor {
-      position: fixed;
-      width: 7px; height: 7px;
-      background: var(--ink);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%,-50%);
-      transition: width 0.2s, height 0.2s, opacity 0.2s;
-      mix-blend-mode: multiply;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — Creative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0d0d0b;
+      --ink-mid: #6a6a65;
+      --ink-faint: rgba(13,13,11,0.08);
+      --paper: #f4f1e8;
+      --paper-warm: #e8e4d6;
+      --accent: #d35400;
     }
-    #cursor.expand { width: 28px; height: 28px; opacity: 0.1; }
-    a, .work-item { cursor: none; }
-  }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Syne', system-ui, sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
 
-  @media (max-width: 520px) {
-    .skills-grid { grid-template-columns: 1fr; }
-    .skill-group:nth-child(odd) { padding-right: 0; border-right: none; }
-    .skill-group:nth-child(even) { padding-left: 0; }
-    .skill-group:nth-last-child(-n+2) { border-bottom: none; }
-    .skill-group { border-bottom: 1px solid var(--ink-faint) !important; }
-    .contact-block { flex-direction: column; align-items: flex-start; }
-  }
-</style>
+    .layout {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 2px solid var(--ink);
+      background: var(--paper-warm);
+    }
+    .logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 28px;
+      font-weight: 600;
+      font-style: italic;
+    }
+    .logo a { color: var(--ink); text-decoration: none; }
+    .logo a::after { content: '✦'; font-size: 10px; margin-left: 4px; vertical-align: super; }
+
+    .nav { display: flex; flex-direction: column; gap: 8px; margin-top: 56px; }
+    .nav-link {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      padding: 8px 0;
+      transition: color 0.2s;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--ink); }
+    .nav-link.active { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+
+    .sidebar-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-mid);
+      line-height: 2;
+    }
+    .sidebar-meta a { color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+    .sidebar-meta a:hover { color: var(--accent); }
+
+    /* Main Content */
+    .main {
+      padding: 48px 56px 80px;
+    }
+
+    header {
+      margin-bottom: 80px;
+      padding-bottom: 48px;
+      border-bottom: 2px solid var(--ink);
+    }
+    .label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(44px, 9vw, 84px);
+      font-weight: 400;
+      line-height: 1;
+    }
+    h1 em { font-style: italic; }
+    .subtitle {
+      font-size: 20px;
+      color: var(--ink-mid);
+      max-width: 520px;
+      margin-top: 28px;
+      line-height: 1.7;
+    }
+
+    /* Two Column */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+    }
+
+    .section-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      margin-bottom: 28px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--ink-faint);
+    }
+
+    /* Essays */
+    .essay {
+      margin-bottom: 44px;
+    }
+    .essay-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .essay h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 26px;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+    .essay h2 a { color: var(--ink); text-decoration: none; }
+    .essay h2 a:hover { text-decoration: underline; }
+    .essay p {
+      color: var(--ink-mid);
+      line-height: 1.7;
+    }
+
+    /* Work List */
+    .work-list {
+      list-style: none;
+    }
+    .work-item {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--ink-faint);
+      display: flex;
+      justify-content: space-between;
+      transition: padding-left 0.3s, background 0.3s;
+    }
+    .work-item:hover {
+      padding-left: 12px;
+      background: var(--paper-warm);
+    }
+    .work-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 18px;
+    }
+    .work-name a { color: var(--ink); text-decoration: none; }
+    .work-name a:hover { text-decoration: underline; }
+    .work-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-mid);
+    }
+
+    /* Quote */
+    blockquote {
+      margin: 80px 0;
+      padding: 40px 0;
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+    }
+    blockquote p {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-style: italic;
+      line-height: 1.4;
+    }
+    blockquote cite {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-style: normal;
+      color: var(--accent);
+      margin-top: 24px;
+      letter-spacing: 0.1em;
+    }
+
+    /* Philosophy */
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin: 60px 0;
+    }
+    .philosophy-item {
+      padding: 28px;
+      background: var(--paper-warm);
+      border: 1px solid var(--ink-faint);
+    }
+    .philosophy-number {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .philosophy-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .philosophy-text {
+      font-size: 13px;
+      color: var(--ink-mid);
+      line-height: 1.6;
+    }
+
+    /* Note Block */
+    .note-block {
+      padding: 32px;
+      background: var(--paper-warm);
+      border-left: 4px solid var(--accent);
+      margin: 60px 0;
+    }
+    .note-block p {
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+    .note-block strong { color: var(--ink); }
+
+    /* Footer */
+    footer {
+      margin-top: 80px;
+      padding-top: 40px;
+      border-top: 2px solid var(--ink);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 48px;
+      align-items: center;
+    }
+    .footer-cta h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 400;
+    }
+    .footer-cta h2 em { font-style: italic; color: var(--accent); }
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+    .contact-btn {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--paper);
+      background: var(--ink);
+      padding: 14px 28px;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .contact-btn:hover {
+      background: var(--accent);
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .email {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--ink-mid);
+    }
+    .footer-bottom {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--ink-faint);
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--ink-mid);
+    }
+    .social-links { display: flex; gap: 20px; }
+    .social-links a { color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+    .social-links a:hover { color: var(--accent); }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar {
+        position: relative;
+        height: auto;
+        padding: 24px;
+        border-right: none;
+        border-bottom: 2px solid var(--ink);
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .nav { margin-top: 16px; flex-direction: row; gap: 16px; }
+      .sidebar-meta { display: none; }
+      .main { padding: 32px 20px 60px; }
+      .content-grid { grid-template-columns: 1fr; }
+      .philosophy-grid { grid-template-columns: 1fr; }
+      footer { grid-template-columns: 1fr; }
+      .footer-contact { align-items: flex-start; }
+    }
+  </style>
 </head>
 <body>
 
-<div id="cursor" aria-hidden="true"></div>
-
-<main class="page">
-
-  <p class="mark">Portfolio — 2026</p>
-
-  <h1 class="title">
-    Interface design<br>
-    <em>&amp; creative</em><br>
-    development
-  </h1>
-
-  <p class="intro">
-    Independent designer and developer crafting minimal, performant, and deeply considered digital experiences. Based in —
-  </p>
-
-  <div class="status-pill">
-    <span class="dot"></span>
-    <span class="status-text">Available for projects</span>
-  </div>
-
-  <hr class="rule">
-
-  <p class="section-label">Selected work</p>
-
-  <ul class="work-list">
-    <li>
-      <a href="#" class="work-item">
-        <div>
-          <p class="work-name">Onyx Editorial Platform</p>
-          <p class="work-detail">Brutalist CMS for independent publishers — React, Next.js, Postgres</p>
-        </div>
-        <div class="work-right">
-          <span class="work-year">2026</span>
-          <span class="work-arrow">↗</span>
-        </div>
-      </a>
-    </li>
-    <li>
-      <a href="#" class="work-item">
-        <div>
-          <p class="work-name">Aura E-Commerce</p>
-          <p class="work-detail">Headless storefront with a focus on typography and reading rhythm</p>
-        </div>
-        <div class="work-right">
-          <span class="work-year">2025</span>
-          <span class="work-arrow">↗</span>
-        </div>
-      </a>
-    </li>
-    <li>
-      <a href="#" class="work-item">
-        <div>
-          <p class="work-name">Foundry Identity</p>
-          <p class="work-detail">Brand identity and web presence for an architecture practice</p>
-        </div>
-        <div class="work-right">
-          <span class="work-year">2024</span>
-          <span class="work-arrow">↗</span>
-        </div>
-      </a>
-    </li>
-    <li>
-      <a href="#" class="work-item">
-        <div>
-          <p class="work-name">Meridian Design System</p>
-          <p class="work-detail">Token-based design system across 4 product teams</p>
-        </div>
-        <div class="work-right">
-          <span class="work-year">2024</span>
-          <span class="work-arrow">↗</span>
-        </div>
-      </a>
-    </li>
-  </ul>
-
-  <hr class="rule">
-
-  <blockquote class="pullquote">
-    "The details are not the details —<br>they make the design."
-  </blockquote>
-
-  <p class="section-label">About</p>
-
-  <p class="about-text">
-    I work at the intersection of <strong>design systems, interaction craft, and frontend engineering</strong>.
-    Over eight years, I've helped studios, startups, and solo founders build things
-    that feel inevitable — where the interface disappears and only the experience remains.
-    <br><br>
-    My practice favours <strong>restraint over decoration</strong>, and clarity over cleverness.
-    If you can feel the grain of thought in the interface, the work isn't done yet.
-  </p>
-
-  <hr class="rule">
-
-  <p class="section-label">Capabilities</p>
-
-  <div class="skills-grid">
-    <div class="skill-group">
-      <p class="skill-category">Design</p>
-      <p class="skill-items">Interface design<br>Design systems<br>Typography<br>Motion</p>
-    </div>
-    <div class="skill-group">
-      <p class="skill-category">Engineering</p>
-      <p class="skill-items">React / Next.js<br>TypeScript<br>WebGL / Three.js<br>CSS architecture</p>
-    </div>
-    <div class="skill-group">
-      <p class="skill-category">Strategy</p>
-      <p class="skill-items">Brand identity<br>Creative direction<br>Design critique</p>
-    </div>
-    <div class="skill-group">
-      <p class="skill-category">Tools</p>
-      <p class="skill-items">Figma<br>Framer<br>Storybook<br>Vercel</p>
-    </div>
-  </div>
-
-  <div class="contact-block">
+<div class="layout">
+  <aside class="sidebar">
     <div>
-      <p class="contact-cta">Let's build something together.</p>
-      <p class="contact-sub">hello@yourname.com · Response within 24h</p>
-    </div>
-    <a href="mailto:hello@yourname.com" class="contact-link">Send a message →</a>
-  </div>
-
-  <footer class="footer">
-    <div class="footer-meta">
-      <span>© 2026</span>
-      <nav class="footer-links">
-        <a href="#">Twitter</a>
-        <a href="#">GitHub</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">Read.cv</a>
+      <p class="logo"><a href="index.html">Riche</a></p>
+      <nav class="nav">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="journal.html" class="nav-link">Journal</a>
+        <a href="work.html" class="nav-link">Work</a>
+        <a href="about.html" class="nav-link">About</a>
       </nav>
     </div>
-    <p class="footer-status">Currently building <strong>brand systems and experimental interfaces</strong> for early-stage companies.</p>
-  </footer>
+    <div class="sidebar-meta">
+      <p>✦ Designer &amp; Maker</p>
+      <p><a href="mailto:hello@yourname.com">hello@yourname.com</a></p>
+    </div>
+  </aside>
 
-</main>
+  <main class="main">
+    <header>
+      <p class="label">Portfolio 2026</p>
+      <h1>Making things<br><em>that matter</em></h1>
+      <p class="subtitle">
+        Designer & writer. I create work that has texture and voice — not templates and jargon. 
+        This is my attempt to show the thinking behind the making.
+      </p>
+    </header>
+
+    <div class="content-grid">
+      <section>
+        <p class="section-title">From the journal</p>
+        
+        <article class="essay">
+          <p class="essay-date">January 15, 2026</p>
+          <h2><a href="#">On finding your voice</a></h2>
+          <p>For years I tried to design like everyone else. Clean, minimal, professional. Then I realized the only work that mattered was the work that felt like me.</p>
+        </article>
+
+        <article class="essay">
+          <p class="essay-date">December 03, 2025</p>
+          <h2><a href="#">Messy first drafts</a></h2>
+          <p>What if we showed more process and less polish? What if the messy bits were the feature, not the bug?</p>
+        </article>
+
+        <article class="essay">
+          <p class="essay-date">November 18, 2025</p>
+          <h2><a href="#">Why editorial matters</a></h2>
+          <p>Magazine layouts taught me more about web design than any UX course. The rhythm. The white space.</p>
+        </article>
+      </section>
+
+      <section>
+        <p class="section-title">Selected work</p>
+        
+        <ul class="work-list">
+          <li class="work-item">
+            <p class="work-name"><a href="#">Editorial Brand</a></p>
+            <p class="work-meta">2025 · Branding</p>
+          </li>
+          <li class="work-item">
+            <p class="work-name"><a href="#">Magazine Spreads</a></p>
+            <p class="work-meta">2025 · Editorial</p>
+          </li>
+          <li class="work-item">
+            <p class="work-name"><a href="#">Type Exploration</a></p>
+            <p class="work-meta">2024 · Experiments</p>
+          </li>
+          <li class="work-item">
+            <p class="work-name"><a href="#">Web Experience</a></p>
+            <p class="work-meta">2024 · Web</p>
+          </li>
+          <li class="work-item">
+            <p class="work-name"><a href="#">Brand Identity</a></p>
+            <p class="work-meta">2024 · Branding</p>
+          </li>
+          <li class="work-item">
+            <p class="work-name"><a href="#">Design Systems</a></p>
+            <p class="work-meta">2023 · Systems</p>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <blockquote>
+      <p>
+        "Design isn't about perfection.<br>
+        It's about showing the hand<br>
+        of the maker."
+      </p>
+      <cite>— The belief behind everything I make</cite>
+    </blockquote>
+
+    <section class="philosophy-grid">
+      <div class="philosophy-item">
+        <p class="philosophy-number">01</p>
+        <p class="philosophy-title">Show the rough</p>
+        <p class="philosophy-text">Sketches, bad first drafts, wrong paths. The messy middle is where the real thinking lives.</p>
+      </div>
+      <div class="philosophy-item">
+        <p class="philosophy-number">02</p>
+        <p class="philosophy-title">Grain matters</p>
+        <p class="philosophy-text">Texture, imperfection, the human hand. That's what makes work memorable.</p>
+      </div>
+      <div class="philosophy-item">
+        <p class="philosophy-number">03</p>
+        <p class="philosophy-title">Speak your truth</p>
+        <p class="philosophy-text">Your voice, not design-speak. Say what you actually think.</p>
+      </div>
+    </section>
+
+    <div class="note-block">
+      <p><strong>Currently:</strong> Taking on selective projects. Obsessed with editorial layouts and typography. Learning to write like myself.</p>
+    </div>
+
+    <footer>
+      <div class="footer-cta">
+        <h2>Let's make<br><em>something</em> together.</h2>
+      </div>
+      <div class="footer-contact">
+        <a href="mailto:hello@yourname.com" class="contact-btn">Get in touch</a>
+        <p class="email">hello@yourname.com</p>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 — Riche</span>
+        <div class="social-links">
+          <a href="#">Twitter</a>
+          <a href="#">Instagram</a>
+          <a href="#">Read.cv</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+</div>
 
 <script>
-  const cursor = document.getElementById('cursor');
-  if (cursor && window.matchMedia('(pointer: fine)').matches) {
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-    });
-    document.querySelectorAll('a, .work-item, .contact-block').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('expand'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('expand'));
-    });
-  }
-
-  // Enhanced work items animation
-  document.querySelectorAll('.work-item').forEach((el, i) => {
+  document.querySelectorAll('.essay, .work-item, .philosophy-item').forEach((el, i) => {
     el.style.opacity = '0';
-    el.style.transform = 'translateY(8px)';
-    el.style.transition = 'opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1)';
     setTimeout(() => {
+      el.style.transition = 'opacity 0.5s';
       el.style.opacity = '1';
-      el.style.transform = 'translateY(0)';
-    }, 300 + i * 60);
+    }, 80 + i * 60);
   });
-
-  // Scroll reveal animations
-  const revealElements = document.querySelectorAll('.section-label, .pullquote, .skills-grid, .contact-block, .footer');
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-  revealElements.forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(12px)';
-    el.style.transition = 'opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)';
-    revealObserver.observe(el);
-  });
-
-  // Status pill cycling
-  const statusPill = document.querySelector('.status-pill');
-  if (statusPill) {
-    const statuses = ['Available for projects', 'Responding to inquiries', 'Building in public'];
-    let currentIndex = 0;
-    const statusText = statusPill.querySelector('.status-text') || statusPill.lastElementChild;
-    
-    setInterval(() => {
-      statusText.style.opacity = '0';
-      setTimeout(() => {
-        currentIndex = (currentIndex + 1) % statuses.length;
-        statusText.textContent = statuses[currentIndex];
-        statusText.style.opacity = '1';
-      }, 150);
-    }, 4000);
-  }
-
-  // Title word animation
-  const titleEl = document.querySelector('.title');
-  if (titleEl) {
-    const originalHTML = titleEl.innerHTML;
-    titleEl.innerHTML = originalHTML
-      .split('<br>')
-      .map(line => {
-        return line
-          .split(' ')
-          .map(word => `<span style="display:inline-block;opacity:0;animation:revealWord 0.5s cubic-bezier(0.16,1,0.3,1) forwards;">${word}</span>`)
-          .join(' ');
-      })
-      .join('<br>');
-
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes revealWord {
-        from { opacity: 0; transform: translateY(8px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-    `;
-    document.head.appendChild(style);
-
-    const spans = titleEl.querySelectorAll('span');
-    spans.forEach((span, i) => {
-      span.style.animationDelay = (0.1 + i * 0.08) + 's';
-    });
-  }
-
-  // Intro fade in
-  const introEl = document.querySelector('.intro');
-  if (introEl) {
-    introEl.style.opacity = '0';
-    introEl.style.animation = 'fadeIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.4s forwards';
-  }
-
-  const style = document.createElement('style');
-  style.textContent = `@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }`;
-  document.head.appendChild(style);
 </script>
 
 </body>
